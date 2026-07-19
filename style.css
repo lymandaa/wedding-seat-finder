@@ -1,7 +1,8 @@
 ```css
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
+
 
 
 body {
@@ -10,49 +11,57 @@ body {
 
     min-height:100vh;
 
+    overflow:hidden;
+
 
     display:flex;
 
-    align-items:center;
-
     justify-content:center;
 
+    align-items:center;
+
+
+    background:#162A3A;
+
+
+    color:#F8F2E8;
 
     padding:25px;
+
+
+    font-family:
+    Montserrat,
+    sans-serif;
+
+}
+
+
+
+/* Candlelight atmosphere */
+
+.night-glow {
+
+    position:fixed;
+
+    width:500px;
+
+    height:500px;
 
 
     background:
 
     radial-gradient(
-        circle at top,
-        rgba(255,255,255,0.25),
-        transparent 40%
-    ),
-
-    #9DB4C3;
+        circle,
+        rgba(201,181,138,0.18),
+        transparent 65%
+    );
 
 
-    color:#263B4A;
+    top:-150px;
 
-}
+    left:50%;
 
-
-/* subtle paper feeling */
-
-body::before {
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-
-    opacity:0.12;
-
-
-    background-image:
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    transform:translateX(-50%);
 
 
     pointer-events:none;
@@ -67,42 +76,20 @@ body::before {
 
     width:100%;
 
+    max-width:420px;
+
+    text-align:center;
+
 }
 
 
 
-/* Main stationery card */
 
-.place-card {
+.content {
 
+    position:relative;
 
-    max-width:390px;
-
-
-    margin:auto;
-
-
-    background:#FAF6EF;
-
-
-    border:
-
-    1px solid #C9B58A;
-
-
-    border-radius:8px;
-
-
-    padding:45px 32px;
-
-
-    text-align:center;
-
-
-
-    box-shadow:
-
-    0 20px 50px rgba(0,0,0,0.15);
+    z-index:2;
 
 }
 
@@ -114,15 +101,19 @@ body::before {
 
 .monogram {
 
+
     font-family:
     "Cormorant Garamond",
     serif;
 
 
-    font-size:36px;
+    font-size:42px;
 
 
-    letter-spacing:4px;
+    letter-spacing:5px;
+
+
+    color:#F8F2E8;
 
 
 }
@@ -143,18 +134,13 @@ body::before {
     margin-top:12px;
 
 
-    font-family:
-    Montserrat,
-    sans-serif;
-
-
     font-size:10px;
 
 
     letter-spacing:4px;
 
 
-    color:#7D858A;
+    color:#AAB9C4;
 
 }
 
@@ -164,7 +150,7 @@ body::before {
 .ornament {
 
 
-    margin:30px 0 20px;
+    margin:45px 0 25px;
 
 
     color:#C9B58A;
@@ -189,20 +175,24 @@ h1 {
     serif;
 
 
-    font-size:55px;
+    font-weight:400;
 
 
-    font-weight:500;
+    font-size:62px;
+
+
+    line-height:1;
 
 
 }
 
 
 
+
 .subtitle {
 
 
-    margin-top:-5px;
+    margin-top:5px;
 
 
     font-family:
@@ -210,13 +200,13 @@ h1 {
     serif;
 
 
-    font-size:28px;
+    font-size:32px;
 
 
-    color:#34495E;
-
+    color:#F8F2E8;
 
 }
+
 
 
 
@@ -224,10 +214,11 @@ h1 {
 /* Search */
 
 
-.search-section {
+.search-area {
 
 
-    margin-top:45px;
+    margin-top:55px;
+
 
 }
 
@@ -239,24 +230,23 @@ label {
     display:block;
 
 
-    font-family:
-    Montserrat,
-    sans-serif;
+    margin-bottom:20px;
 
 
-    font-size:12px;
+    font-size:11px;
 
 
-    letter-spacing:2px;
+    letter-spacing:3px;
 
 
-    color:#7D858A;
+    text-transform:uppercase;
 
 
-    margin-bottom:15px;
+    color:#AAB9C4;
 
 
 }
+
 
 
 
@@ -266,7 +256,7 @@ input {
     width:100%;
 
 
-    background:white;
+    background:transparent;
 
 
     border:none;
@@ -274,22 +264,33 @@ input {
 
     border-bottom:
 
-    1px solid #C9B58A;
+    1px solid rgba(201,181,138,0.7);
 
 
-    padding:15px;
+    padding:14px 5px;
 
 
     text-align:center;
 
 
+    color:#F8F2E8;
+
+
+    font-size:18px;
+
+
     font-family:
-    Montserrat,
-    sans-serif;
+    Cormorant Garamond,
+    serif;
 
 
-    font-size:15px;
+}
 
+
+
+input::placeholder {
+
+    color:rgba(248,242,232,0.5);
 
 }
 
@@ -303,10 +304,11 @@ input:focus {
 
 
 
+
 button {
 
 
-    margin-top:25px;
+    margin-top:35px;
 
 
     background:none;
@@ -315,50 +317,40 @@ button {
     border:none;
 
 
-    border-bottom:
-
-    1px solid #263B4A;
-
-
-    padding-bottom:8px;
-
-
-    font-family:
-    Montserrat,
-    sans-serif;
-
-
-    text-transform:uppercase;
-
-
-    letter-spacing:3px;
+    color:#C9B58A;
 
 
     font-size:11px;
 
 
-    color:#263B4A;
+    letter-spacing:4px;
+
+
+    text-transform:uppercase;
+
+
+    padding-bottom:10px;
+
+
+    border-bottom:
+
+    1px solid #C9B58A;
 
 
 }
 
 
 
-/* Result */
 
 
-.seat-result {
+/* Reveal */
 
 
-    margin-top:45px;
+.result {
 
 
-    padding-top:30px;
+    margin-top:50px;
 
-
-    border-top:
-
-    1px solid #DED5C7;
 
 }
 
@@ -372,36 +364,31 @@ button {
     serif;
 
 
-    font-size:34px;
+    font-size:38px;
 
 }
 
 
 
-.divider {
+.gold-line {
 
 
-    width:50px;
+    width:80px;
 
 
-    border-top:
-
-    1px solid #C9B58A;
+    height:1px;
 
 
-    margin:20px auto;
+    background:#C9B58A;
+
+
+    margin:25px auto;
 
 }
-
 
 
 
 .label {
-
-
-    font-family:
-    Montserrat,
-    sans-serif;
 
 
     font-size:10px;
@@ -410,13 +397,14 @@ button {
     letter-spacing:4px;
 
 
-    color:#7D858A;
+    color:#AAB9C4;
+
 
 }
 
 
 
-.table-number {
+.number {
 
 
     font-family:
@@ -424,7 +412,7 @@ button {
     serif;
 
 
-    font-size:80px;
+    font-size:85px;
 
 
     line-height:1;
@@ -434,7 +422,20 @@ button {
 
 
 
-.seat-number {
+.seat {
+
+
+    font-size:50px;
+
+}
+
+
+
+
+.closing {
+
+
+    margin-top:25px;
 
 
     font-family:
@@ -442,28 +443,9 @@ button {
     serif;
 
 
-    font-size:45px;
-
-
-}
-
-
-
-.closing {
-
-
-    font-family:
-    Montserrat,
-    sans-serif;
-
-
-    font-size:13px;
-
-
-    color:#7D858A;
+    font-size:22px;
 
 }
-
 
 
 
@@ -471,7 +453,7 @@ button {
 footer {
 
 
-    margin-top:45px;
+    margin-top:55px;
 
 
     font-family:
@@ -479,10 +461,13 @@ footer {
     serif;
 
 
-    font-size:18px;
+    font-size:20px;
+
+
+    color:#F8F2E8;
+
 
 }
-
 
 
 
@@ -492,4 +477,3 @@ footer {
 
 }
 ```
-
