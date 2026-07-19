@@ -2,7 +2,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwHNdTlDchoC6JMk-_-4kFQ
 
 
 const input = document.getElementById("guestName");
-const button = document.querySelector("button");
+const form = document.getElementById("searchArea");
 
 let selectedGuest = "";
 let searchTimer;
@@ -10,67 +10,81 @@ let searchTimer;
 
 
 // =============================
-// ENTER KEY SEARCH
+// FORM SUBMIT (BUTTON + MOBILE ENTER)
 // =============================
 
-input.addEventListener("keydown", (event) => {
+form.addEventListener("submit", async (event) => {
 
 
-    if(event.key === "Enter") {
-
-
-        event.preventDefault();
+    event.preventDefault();
 
 
 
-        const firstSuggestion = document.querySelector(
-            ".suggestions div"
-        );
+    // If dropdown exists, choose first result
+
+    const firstSuggestion = document.querySelector(
+        ".suggestions div"
+    );
 
 
 
-        // Select first dropdown result automatically
-
-        if(!selectedGuest && firstSuggestion){
+    if(!selectedGuest && firstSuggestion){
 
 
-            selectedGuest = firstSuggestion.innerText;
+        selectedGuest = firstSuggestion.innerText;
 
 
-            input.value = selectedGuest;
-
-
-
-            const suggestionBox =
-                document.querySelector(".suggestions");
-
-
-            if(suggestionBox){
-
-                suggestionBox.remove();
-
-            }
-
-        }
-
-
-
-        // Allow manually typed full names
-
-        if(!selectedGuest && input.value.trim()){
-
-
-            selectedGuest =
-                input.value.trim();
-
-        }
-
-
-
-        button.click();
+        input.value = selectedGuest;
 
 
     }
+
+
+
+
+    if(!selectedGuest && input.value.trim()){
+
+
+        selectedGuest = input.value.trim();
+
+
+    }
+
+
+
+
+
+    if(!selectedGuest){
+
+
+        alert("Please enter your name");
+
+
+        return;
+
+
+    }
+
+
+
+
+    // Remove dropdown
+
+    const suggestionBox =
+        document.querySelector(".suggestions");
+
+
+    if(suggestionBox){
+
+        suggestionBox.remove();
+
+    }
+
+
+
+
+    await findTable();
+
 
 
 });
@@ -124,14 +138,12 @@ input.addEventListener("input", () => {
 
 
 
-    // Wait before searching
 
     searchTimer = setTimeout(async () => {
 
 
 
         try {
-
 
 
             const response = await fetch(
@@ -152,6 +164,7 @@ input.addEventListener("input", () => {
 
 
         }
+
 
         catch(error){
 
@@ -214,10 +227,8 @@ function showSuggestions(results){
         document.createElement("div");
 
 
-
     list.className =
         "suggestions";
-
 
 
 
@@ -234,7 +245,6 @@ function showSuggestions(results){
 
         item.innerText =
             person.name;
-
 
 
 
@@ -285,40 +295,16 @@ function showSuggestions(results){
 
 
 
-
 // =============================
 // FIND TABLE
 // =============================
 
-button.addEventListener("click", async () => {
+async function findTable(){
 
 
 
-    if(!selectedGuest){
-
-
-        selectedGuest =
-            input.value.trim();
-
-
-
-        if(!selectedGuest){
-
-
-            alert(
-                "Please enter your name"
-            );
-
-
-            return;
-
-        }
-
-
-    }
-
-
-
+    const button =
+        form.querySelector("button");
 
 
 
@@ -361,7 +347,6 @@ button.addEventListener("click", async () => {
 
 
 
-
         const data =
             await response.json();
 
@@ -371,6 +356,28 @@ button.addEventListener("click", async () => {
 
 
         if(data.found){
+
+
+
+            // Hide search area
+
+            form.classList.add(
+                "hide-search"
+            );
+
+
+
+            document.querySelector("h1")
+                .classList.add("hide-search");
+
+
+
+            document.querySelector(".subtitle")
+                .classList.add("hide-search");
+
+
+
+
 
 
 
@@ -392,10 +399,8 @@ button.addEventListener("click", async () => {
 
             setTimeout(() => {
 
-
                 result.style.animation =
                     "";
-
 
             },10);
 
@@ -404,7 +409,9 @@ button.addEventListener("click", async () => {
 
 
 
-            // Same table guests
+
+
+            // Guests at same table
 
             const sameTable =
                 data.party.filter(person =>
@@ -424,7 +431,9 @@ button.addEventListener("click", async () => {
 
 
 
-            // Same group but different table
+
+
+            // Family/friends elsewhere
 
             const otherTables =
                 data.party.filter(person =>
@@ -447,7 +456,6 @@ button.addEventListener("click", async () => {
 
 
             result.innerHTML = `
-
 
 
 
@@ -497,13 +505,11 @@ button.addEventListener("click", async () => {
 
                 `
 
-
                 <div class="party-title">
 
                     SEATED WITH
 
                 </div>
-
 
 
 
@@ -522,8 +528,6 @@ button.addEventListener("click", async () => {
 
                 </div>
 
-
-
                 `
 
                 :
@@ -540,13 +544,13 @@ button.addEventListener("click", async () => {
 
 
 
+
             ${
                 otherTables.length > 0
 
                 ?
 
                 `
-
 
                 <div class="party-title family-title">
 
@@ -569,7 +573,6 @@ button.addEventListener("click", async () => {
 
                 <div class="party">
 
-
                     ${otherTables
 
                         .map(person =>
@@ -582,10 +585,7 @@ button.addEventListener("click", async () => {
 
                     }
 
-
                 </div>
-
-
 
                 `
 
@@ -609,15 +609,11 @@ button.addEventListener("click", async () => {
 
 
 
-
-
-
             `;
 
 
 
         }
-
 
 
     }
@@ -642,13 +638,13 @@ button.addEventListener("click", async () => {
 
 
 
+
     finally {
 
 
 
         button.innerText =
             "VIEW TABLE";
-
 
 
         button.disabled =
@@ -659,4 +655,4 @@ button.addEventListener("click", async () => {
 
 
 
-});
+}
