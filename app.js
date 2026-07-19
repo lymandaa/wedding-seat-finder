@@ -326,34 +326,6 @@ async function findTable(){
 // SHOW RESULTS
 // =========================
 
-// Keep search area visible
-// Results gently appear underneath
-
-const result =
-    document.querySelector(".result");
-
-
-result.classList.remove(
-    "hidden"
-);
-
-
-result.style.animation =
-    "none";
-
-
-setTimeout(() => {
-
-    result.style.animation =
-        "";
-
-},10);
-
-
-
-
-
-
 
         const result =
             document.querySelector(".result");
