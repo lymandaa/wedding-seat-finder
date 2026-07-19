@@ -322,60 +322,32 @@ async function findTable(){
 
 
 
+// =========================
+// SHOW RESULTS
+// =========================
 
-        // =========================
-        // PAGE TRANSFORMATION
-        // =========================
+// Keep search area visible
+// Results gently appear underneath
 
-
-        form.classList.add(
-            "hide-search"
-        );
-
-
-
-        const title =
-            document.querySelector("h1");
+const result =
+    document.querySelector(".result");
 
 
-        if(title){
-
-            title.classList.add(
-                "hide-search"
-            );
-
-        }
+result.classList.remove(
+    "hidden"
+);
 
 
-
-        const subtitle =
-            document.querySelector(".subtitle");
-
-
-        if(subtitle){
-
-            subtitle.classList.add(
-                "hide-search"
-            );
-
-        }
+result.style.animation =
+    "none";
 
 
+setTimeout(() => {
 
+    result.style.animation =
+        "";
 
-        const topDivider =
-            document.querySelector(
-                ".divider"
-            );
-
-
-        if(topDivider){
-
-            topDivider.classList.add(
-                "hide-search"
-            );
-
-        }
+},10);
 
 
 
