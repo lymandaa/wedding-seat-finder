@@ -1,21 +1,22 @@
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 
 body {
 
     margin:0;
+
     min-height:100vh;
 
-    background:
-    radial-gradient(circle at top, #18294d 0%, #081426 45%, #050b16 100%);
+    background:#EEEAE3;
 
-    color:white;
+    color:#33363A;
 
     font-family:'Montserrat', sans-serif;
 
 }
+
 
 
 .page {
@@ -24,11 +25,11 @@ body {
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    padding:30px;
+    justify-content:center;
+
+    padding:40px 25px;
 
 }
 
@@ -37,7 +38,8 @@ body {
 .content {
 
     width:100%;
-    max-width:420px;
+
+    max-width:380px;
 
     text-align:center;
 
@@ -49,18 +51,19 @@ body {
 
     font-family:'Cormorant Garamond', serif;
 
-    font-size:48px;
+    font-size:42px;
 
-    letter-spacing:8px;
+    letter-spacing:5px;
 
-    font-weight:300;
+    font-weight:400;
 
 }
 
 
+
 .monogram span {
 
-    color:#d8bd82;
+    color:#8FAFC4;
 
 }
 
@@ -70,21 +73,25 @@ body {
 
     margin-top:18px;
 
-    font-size:12px;
+    font-size:11px;
 
-    letter-spacing:5px;
+    letter-spacing:4px;
 
-    color:#d8bd82;
+    color:#6F7478;
 
 }
 
 
 
-.ornament {
+.divider {
 
-    margin:40px 0 25px;
+    width:55px;
 
-    color:#d8bd82;
+    height:1px;
+
+    background:#8FAFC4;
+
+    margin:30px auto;
 
 }
 
@@ -92,13 +99,15 @@ body {
 
 h1 {
 
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Italianno', cursive;
 
-    font-size:55px;
+    font-size:72px;
 
-    font-weight:300;
+    font-weight:400;
 
-    margin:0;
+    color:#33363A;
+
+    margin:0 0 10px;
 
 }
 
@@ -106,11 +115,13 @@ h1 {
 
 .subtitle {
 
-    font-size:14px;
+    font-size:13px;
 
-    letter-spacing:3px;
+    letter-spacing:2px;
 
-    opacity:.8;
+    line-height:1.8;
+
+    color:#6F7478;
 
     margin-bottom:45px;
 
@@ -118,13 +129,13 @@ h1 {
 
 
 
-.search-area label {
+label {
 
     display:block;
 
-    font-size:12px;
+    font-size:10px;
 
-    letter-spacing:2px;
+    letter-spacing:3px;
 
     margin-bottom:15px;
 
@@ -138,17 +149,17 @@ input {
 
     padding:16px;
 
-    background:rgba(255,255,255,.08);
+    background:#F7F4EF;
 
-    border:1px solid rgba(216,189,130,.5);
+    border:1px solid #D8D0C5;
 
-    border-radius:2px;
+    border-radius:4px;
 
-    color:white;
+    font-size:15px;
 
     text-align:center;
 
-    font-size:16px;
+    color:#33363A;
 
 }
 
@@ -156,7 +167,7 @@ input {
 
 input::placeholder {
 
-    color:#c8c8c8;
+    color:#999;
 
 }
 
@@ -164,23 +175,23 @@ input::placeholder {
 
 button {
 
-    margin-top:18px;
-
     width:100%;
+
+    margin-top:18px;
 
     padding:16px;
 
     border:none;
 
-    background:#d8bd82;
+    background:#8FAFC4;
 
-    color:#081426;
+    color:white;
 
-    letter-spacing:2px;
+    font-size:11px;
 
-    font-size:12px;
+    letter-spacing:3px;
 
-    cursor:pointer;
+    border-radius:4px;
 
 }
 
@@ -188,7 +199,7 @@ button {
 
 .result {
 
-    margin-top:40px;
+    margin-top:45px;
 
 }
 
@@ -198,21 +209,7 @@ button {
 
     font-family:'Cormorant Garamond', serif;
 
-    font-size:34px;
-
-}
-
-
-
-.line {
-
-    height:1px;
-
-    background:#d8bd82;
-
-    width:80px;
-
-    margin:20px auto;
+    font-size:38px;
 
 }
 
@@ -220,11 +217,11 @@ button {
 
 .label {
 
-    font-size:11px;
+    font-size:10px;
 
     letter-spacing:4px;
 
-    color:#d8bd82;
+    color:#6F7478;
 
 }
 
@@ -234,9 +231,13 @@ button {
 
     font-family:'Cormorant Garamond', serif;
 
-    font-size:70px;
+    font-size:75px;
 
-    margin-bottom:20px;
+    line-height:1;
+
+    color:#8FAFC4;
+
+    margin:10px 0 25px;
 
 }
 
@@ -244,9 +245,9 @@ button {
 
 .closing {
 
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Italianno', cursive;
 
-    font-size:22px;
+    font-size:36px;
 
 }
 
@@ -256,32 +257,8 @@ footer {
 
     margin-top:50px;
 
-    font-family:'Cormorant Garamond', serif;
+    letter-spacing:4px;
 
-    opacity:.8;
-
-}
-
-
-
-.night-glow {
-
-    position:fixed;
-
-    width:500px;
-
-    height:500px;
-
-    background:#243b68;
-
-    filter:blur(120px);
-
-    top:-200px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    opacity:.35;
+    font-size:11px;
 
 }
