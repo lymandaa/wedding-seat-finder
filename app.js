@@ -2,9 +2,81 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwHNdTlDchoC6JMk-_-4kFQ
 
 
 const input = document.getElementById("guestName");
-const form = document.getElementById("guestSearch");
+const button = document.querySelector("button");
 
 let selectedGuest = "";
+let searchTimer;
+
+
+
+// =============================
+// ENTER KEY SEARCH
+// =============================
+
+input.addEventListener("keydown", (event) => {
+
+
+    if(event.key === "Enter") {
+
+
+        event.preventDefault();
+
+
+
+        const firstSuggestion = document.querySelector(
+            ".suggestions div"
+        );
+
+
+
+        // Select first dropdown result automatically
+
+        if(!selectedGuest && firstSuggestion){
+
+
+            selectedGuest = firstSuggestion.innerText;
+
+
+            input.value = selectedGuest;
+
+
+
+            const suggestionBox =
+                document.querySelector(".suggestions");
+
+
+            if(suggestionBox){
+
+                suggestionBox.remove();
+
+            }
+
+        }
+
+
+
+        // Allow manually typed full names
+
+        if(!selectedGuest && input.value.trim()){
+
+
+            selectedGuest =
+                input.value.trim();
+
+        }
+
+
+
+        button.click();
+
+
+    }
+
+
+});
+
+
+
 
 
 
@@ -12,10 +84,12 @@ let selectedGuest = "";
 // AUTOCOMPLETE SEARCH
 // =============================
 
-input.addEventListener("input", async () => {
+input.addEventListener("input", () => {
 
 
-    const search = input.value.trim().toLowerCase();
+
+    const search =
+        input.value.trim().toLowerCase();
 
 
 
@@ -23,18 +97,25 @@ input.addEventListener("input", async () => {
 
 
 
+    const oldList =
+        document.querySelector(".suggestions");
+
+
+
+    if(oldList){
+
+        oldList.remove();
+
+    }
+
+
+
+    clearTimeout(searchTimer);
+
+
+
+
     if(search.length < 3){
-
-
-        const oldList = document.querySelector(".suggestions");
-
-
-        if(oldList){
-
-            oldList.remove();
-
-        }
-
 
         return;
 
@@ -43,21 +124,55 @@ input.addEventListener("input", async () => {
 
 
 
-    const response = await fetch(
-        `${API_URL}?search=${search}`
-    );
+    // Wait before searching
+
+    searchTimer = setTimeout(async () => {
 
 
 
-    const results = await response.json();
+        try {
 
 
 
-    showSuggestions(results);
+            const response = await fetch(
+
+                `${API_URL}?search=${encodeURIComponent(search)}`
+
+            );
+
+
+
+            const results =
+                await response.json();
+
+
+
+            showSuggestions(results);
+
+
+
+        }
+
+        catch(error){
+
+
+            console.error(
+                "Search error:",
+                error
+            );
+
+
+        }
+
+
+
+    },400);
 
 
 
 });
+
+
 
 
 
@@ -70,7 +185,8 @@ function showSuggestions(results){
 
 
 
-    let oldList = document.querySelector(".suggestions");
+    const oldList =
+        document.querySelector(".suggestions");
 
 
 
@@ -93,10 +209,15 @@ function showSuggestions(results){
 
 
 
-    const list = document.createElement("div");
+
+    const list =
+        document.createElement("div");
 
 
-    list.className = "suggestions";
+
+    list.className =
+        "suggestions";
+
 
 
 
@@ -106,11 +227,14 @@ function showSuggestions(results){
 
 
 
-        const item = document.createElement("div");
+        const item =
+            document.createElement("div");
 
 
 
-        item.innerText = person.name;
+        item.innerText =
+            person.name;
+
 
 
 
@@ -120,10 +244,14 @@ function showSuggestions(results){
 
 
 
-            input.value = person.name;
+            input.value =
+                person.name;
 
 
-            selectedGuest = person.name;
+
+            selectedGuest =
+                person.name;
+
 
 
             list.remove();
@@ -131,6 +259,7 @@ function showSuggestions(results){
 
 
         });
+
 
 
 
@@ -156,131 +285,75 @@ function showSuggestions(results){
 
 
 
+
 // =============================
-// FIND TABLE (FORM SUBMIT)
+// FIND TABLE
 // =============================
 
-form.addEventListener("submit", async (event) => {
-
-
-    event.preventDefault();
-
-
-
-    // If guest clicked dropdown, use that name
-
-    // Otherwise use typed name
-
-    if(!selectedGuest){
-
-
-        selectedGuest = input.value.trim();
-
-
-    }
-
-
+button.addEventListener("click", async () => {
 
 
 
     if(!selectedGuest){
 
 
-        alert("Please enter your name");
-
-
-        return;
-
-
-    }
+        selectedGuest =
+            input.value.trim();
 
 
 
-
-    // Remove dropdown if still visible
-
-    const suggestionBox = document.querySelector(".suggestions");
+        if(!selectedGuest){
 
 
-    if(suggestionBox){
-
-        suggestionBox.remove();
-
-    }
+            alert(
+                "Please enter your name"
+            );
 
 
-
-
-
-
-    const response = await fetch(
-
-        API_URL,
-
-        {
-
-            method:"POST",
-
-            body:JSON.stringify({
-
-                name:selectedGuest
-
-            })
+            return;
 
         }
 
-    );
 
-
-
-
-    const data = await response.json();
-
-
-
-
-
-
-    if(data.found){
-
-
-
-        const result = document.querySelector(".result");
-
-
-
-        result.classList.remove("hidden");
-
-
-
-        result.style.animation = "none";
-
-
-
-        setTimeout(() => {
-
-
-            result.style.animation = "";
-
-
-        },10);
+    }
 
 
 
 
 
 
-
-        // Guests at the same table
-
-        const sameTable = data.party.filter(person =>
+    button.innerText =
+        "FINDING YOUR TABLE...";
 
 
-            person.name !== data.guest &&
+
+    button.disabled = true;
 
 
-            String(person.table) === String(data.table)
 
+
+
+
+    try {
+
+
+
+        const response = await fetch(
+
+            API_URL,
+
+            {
+
+                method:"POST",
+
+
+                body:JSON.stringify({
+
+                    name:selectedGuest
+
+                })
+
+            }
 
         );
 
@@ -289,84 +362,98 @@ form.addEventListener("submit", async (event) => {
 
 
 
-
-
-        // Family/friends in same group but different tables
-
-        const otherTables = data.party.filter(person =>
-
-
-            person.name !== data.guest &&
-
-
-            String(person.table) !== String(data.table)
-
-
-        );
+        const data =
+            await response.json();
 
 
 
 
 
 
+        if(data.found){
 
 
 
-        result.innerHTML = `
+            const result =
+                document.querySelector(".result");
 
 
 
-
-        <div class="guest-name">
-
-            ${data.guest}
-
-        </div>
+            result.classList.remove(
+                "hidden"
+            );
 
 
 
-
-
-        <div class="divider"></div>
-
-
+            result.style.animation =
+                "none";
 
 
 
-        <div class="label">
-
-            YOUR TABLE
-
-        </div>
+            setTimeout(() => {
 
 
+                result.style.animation =
+                    "";
 
 
-
-        <div class="number">
-
-            ${data.table}
-
-        </div>
+            },10);
 
 
 
 
 
 
+            // Same table guests
+
+            const sameTable =
+                data.party.filter(person =>
 
 
-        ${
-            sameTable.length > 0
+                    person.name !== data.guest &&
 
-            ?
+                    String(person.table)
+                    ===
+                    String(data.table)
 
-            `
+
+                );
 
 
-            <div class="party-title">
 
-                SEATED WITH
+
+
+
+            // Same group but different table
+
+            const otherTables =
+                data.party.filter(person =>
+
+
+                    person.name !== data.guest &&
+
+                    String(person.table)
+                    !==
+                    String(data.table)
+
+
+                );
+
+
+
+
+
+
+
+
+            result.innerHTML = `
+
+
+
+
+            <div class="guest-name">
+
+                ${data.guest}
 
             </div>
 
@@ -374,115 +461,202 @@ form.addEventListener("submit", async (event) => {
 
 
 
-            <div class="party">
+            <div class="divider"></div>
 
-                ${sameTable
 
-                    .map(person => person.name)
 
-                    .join("<br>")
 
-                }
+
+            <div class="label">
+
+                YOUR TABLE
 
             </div>
 
 
 
-            `
 
-            :
 
-            ""
+            <div class="number">
+
+                ${data.table}
+
+            </div>
+
+
+
+
+
+
+
+
+            ${
+                sameTable.length > 0
+
+                ?
+
+                `
+
+
+                <div class="party-title">
+
+                    SEATED WITH
+
+                </div>
+
+
+
+
+
+                <div class="party">
+
+                    ${sameTable
+
+                        .map(person =>
+                            person.name
+                        )
+
+                        .join("<br>")
+
+                    }
+
+                </div>
+
+
+
+                `
+
+                :
+
+                ""
+
+            }
+
+
+
+
+
+
+
+
+
+            ${
+                otherTables.length > 0
+
+                ?
+
+                `
+
+
+                <div class="party-title family-title">
+
+                    FAMILY & FRIENDS
+
+                </div>
+
+
+
+
+                <div class="family-subtitle">
+
+                    Other tables
+
+                </div>
+
+
+
+
+
+                <div class="party">
+
+
+                    ${otherTables
+
+                        .map(person =>
+
+                            `${person.name} — Table ${person.table}`
+
+                        )
+
+                        .join("<br>")
+
+                    }
+
+
+                </div>
+
+
+
+                `
+
+                :
+
+                ""
+
+            }
+
+
+
+
+
+
+
+            <p class="closing">
+
+                Enjoy the evening
+
+            </p>
+
+
+
+
+
+
+            `;
+
+
 
         }
-
-
-
-
-
-
-
-
-
-
-        ${
-            otherTables.length > 0
-
-            ?
-
-            `
-
-
-            <div class="party-title family-title">
-
-                FAMILY & FRIENDS
-
-            </div>
-
-
-
-
-            <div class="family-subtitle">
-
-                Other tables
-
-            </div>
-
-
-
-
-
-            <div class="party">
-
-
-                ${otherTables
-
-                    .map(person =>
-
-                        `${person.name} — Table ${person.table}`
-
-                    )
-
-                    .join("<br>")
-
-                }
-
-
-            </div>
-
-
-
-            `
-
-            :
-
-            ""
-
-        }
-
-
-
-
-
-
-
-
-        <p class="closing">
-
-            Enjoy the evening
-
-        </p>
-
-
-
-
-
-
-        `;
 
 
 
     }
+
+
+
+    catch(error){
+
+
+        console.error(
+            "Lookup error:",
+            error
+        );
+
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+
+    }
+
+
+
+    finally {
+
+
+
+        button.innerText =
+            "VIEW TABLE";
+
+
+
+        button.disabled =
+            false;
+
+
+    }
+
 
 
 });
