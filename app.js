@@ -6,6 +6,52 @@ const button = document.querySelector("button");
 
 let selectedGuest = "";
 
+// =============================
+// ENTER KEY SEARCH
+// =============================
+
+input.addEventListener("keydown", (event) => {
+
+
+    if(event.key === "Enter") {
+
+
+        event.preventDefault();
+
+
+
+        const firstSuggestion = document.querySelector(
+            ".suggestions div"
+        );
+
+
+
+        // Automatically select first matching name
+
+        if(!selectedGuest && firstSuggestion){
+
+
+            selectedGuest = firstSuggestion.innerText;
+
+            input.value = selectedGuest;
+
+
+            document.querySelector(".suggestions").remove();
+
+
+        }
+
+
+
+        // Trigger search button
+
+        button.click();
+
+
+    }
+
+
+});
 
 
 // =============================
