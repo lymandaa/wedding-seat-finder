@@ -2,75 +2,9 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwHNdTlDchoC6JMk-_-4kFQ
 
 
 const input = document.getElementById("guestName");
-const button = document.querySelector("button");
+const form = document.getElementById("guestSearch");
 
 let selectedGuest = "";
-
-
-
-// =============================
-// ENTER KEY SEARCH
-// =============================
-
-input.addEventListener("keydown", (event) => {
-
-
-    if(event.key === "Enter") {
-
-
-        event.preventDefault();
-
-
-
-        const firstSuggestion = document.querySelector(
-            ".suggestions div"
-        );
-
-
-
-        // If dropdown exists, select first option
-
-        if(!selectedGuest && firstSuggestion){
-
-
-            selectedGuest = firstSuggestion.innerText;
-
-
-            input.value = selectedGuest;
-
-
-
-            const suggestionBox = document.querySelector(".suggestions");
-
-
-            if(suggestionBox){
-
-                suggestionBox.remove();
-
-            }
-
-        }
-
-
-
-        // If full name was typed manually
-
-        if(!selectedGuest && input.value.trim()){
-
-            selectedGuest = input.value.trim();
-
-        }
-
-
-
-        button.click();
-
-
-    }
-
-
-});
-
 
 
 
@@ -223,34 +157,57 @@ function showSuggestions(results){
 
 
 // =============================
-// FIND TABLE
+// FIND TABLE (FORM SUBMIT)
 // =============================
 
-button.addEventListener("click", async () => {
+form.addEventListener("submit", async (event) => {
+
+
+    event.preventDefault();
+
+
+
+    // If guest clicked dropdown, use that name
+
+    // Otherwise use typed name
+
+    if(!selectedGuest){
+
+
+        selectedGuest = input.value.trim();
+
+
+    }
+
+
 
 
 
     if(!selectedGuest){
 
 
-
-        selectedGuest = input.value.trim();
-
+        alert("Please enter your name");
 
 
-        if(!selectedGuest){
-
-
-            alert("Please enter your name");
-
-
-            return;
-
-
-        }
+        return;
 
 
     }
+
+
+
+
+    // Remove dropdown if still visible
+
+    const suggestionBox = document.querySelector(".suggestions");
+
+
+    if(suggestionBox){
+
+        suggestionBox.remove();
+
+    }
+
 
 
 
@@ -526,7 +483,6 @@ button.addEventListener("click", async () => {
 
 
     }
-
 
 
 });
