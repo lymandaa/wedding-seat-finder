@@ -2,7 +2,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwHNdTlDchoC6JMk-_-4kFQ
 
 
 const input = document.getElementById("guestName");
-const form = document.getElementById("guestSearch");
+const form = document.querySelector(".search-area");
 
 let selectedGuest = "";
 let searchTimer;
@@ -19,20 +19,16 @@ form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
 
-
-    const firstSuggestion = document.querySelector(
-        ".suggestions div"
-    );
+    const firstSuggestion =
+        document.querySelector(".suggestions div");
 
 
 
     if(!selectedGuest && firstSuggestion){
 
-
         selectedGuest = firstSuggestion.innerText;
 
         input.value = selectedGuest;
-
 
     }
 
@@ -41,9 +37,7 @@ form.addEventListener("submit", async (event) => {
 
     if(!selectedGuest && input.value.trim()){
 
-
         selectedGuest = input.value.trim();
-
 
     }
 
@@ -53,15 +47,11 @@ form.addEventListener("submit", async (event) => {
 
     if(!selectedGuest){
 
-
         alert("Please enter your name");
-
 
         return;
 
-
     }
-
 
 
 
@@ -78,9 +68,7 @@ form.addEventListener("submit", async (event) => {
 
 
 
-
     await findTable();
-
 
 
 });
@@ -95,7 +83,6 @@ form.addEventListener("submit", async (event) => {
 // =============================
 
 input.addEventListener("input", () => {
-
 
 
     const search =
@@ -134,9 +121,7 @@ input.addEventListener("input", () => {
 
 
 
-
     searchTimer = setTimeout(async () => {
-
 
 
         try {
@@ -149,20 +134,15 @@ input.addEventListener("input", () => {
             );
 
 
-
             const results =
                 await response.json();
-
 
 
             showSuggestions(results);
 
 
 
-        }
-
-
-        catch(error){
+        } catch(error){
 
 
             console.error(
@@ -186,12 +166,12 @@ input.addEventListener("input", () => {
 
 
 
+
 // =============================
 // SHOW NAME OPTIONS
 // =============================
 
 function showSuggestions(results){
-
 
 
     const oldList =
@@ -207,15 +187,11 @@ function showSuggestions(results){
 
 
 
-
-
-    if(results.length === 0){
+    if(!results.length){
 
         return;
 
     }
-
-
 
 
 
@@ -233,10 +209,8 @@ function showSuggestions(results){
     results.slice(0,5).forEach(person => {
 
 
-
         const item =
             document.createElement("div");
-
 
 
         item.innerText =
@@ -245,38 +219,28 @@ function showSuggestions(results){
 
 
 
-
         item.addEventListener("click", () => {
-
 
 
             input.value =
                 person.name;
 
 
-
             selectedGuest =
                 person.name;
 
 
-
             list.remove();
-
 
 
         });
 
 
 
-
-
         list.appendChild(item);
 
 
-
     });
-
-
 
 
 
@@ -285,6 +249,8 @@ function showSuggestions(results){
 
 
 }
+
+
 
 
 
@@ -308,10 +274,7 @@ async function findTable(){
         "FINDING YOUR TABLE...";
 
 
-
     button.disabled = true;
-
-
 
 
 
@@ -328,7 +291,6 @@ async function findTable(){
 
                 method:"POST",
 
-
                 body:JSON.stringify({
 
                     name:selectedGuest
@@ -341,8 +303,6 @@ async function findTable(){
 
 
 
-
-
         const data =
             await response.json();
 
@@ -350,284 +310,281 @@ async function findTable(){
 
 
 
+        if(!data.found){
 
-        if(data.found){
+            alert("Guest not found");
 
-
-
-            // =========================
-            // TRANSFORM PAGE
-            // =========================
-
-
-            form.classList.add(
-                "hide-search"
-            );
-
-
-            document.querySelector("h1")
-                .classList.add(
-                    "hide-search"
-                );
-
-
-            document.querySelector(".subtitle")
-                .classList.add(
-                    "hide-search"
-                );
-
-
-            document.querySelector(".divider")
-                .classList.add(
-                    "hide-search"
-                );
-
-
-
-
-
-
-
-            const result =
-                document.querySelector(".result");
-
-
-
-            result.classList.remove(
-                "hidden"
-            );
-
-
-
-            result.style.animation =
-                "none";
-
-
-
-            setTimeout(() => {
-
-                result.style.animation =
-                    "";
-
-            },10);
-
-
-
-
-
-
-
-
-            // Guests at same table
-
-            const sameTable =
-                data.party.filter(person =>
-
-
-                    person.name !== data.guest &&
-
-                    String(person.table)
-                    ===
-                    String(data.table)
-
-
-                );
-
-
-
-
-
-
-
-
-            // Family/friends elsewhere
-
-            const otherTables =
-                data.party.filter(person =>
-
-
-                    person.name !== data.guest &&
-
-                    String(person.table)
-                    !==
-                    String(data.table)
-
-
-                );
-
-
-
-
-
-
-
-
-            result.innerHTML = `
-
-
-
-            <div class="guest-name">
-
-                ${data.guest}
-
-            </div>
-
-
-
-
-
-            <div class="divider"></div>
-
-
-
-
-
-            <div class="label">
-
-                YOUR TABLE
-
-            </div>
-
-
-
-
-
-            <div class="number">
-
-                ${data.table}
-
-            </div>
-
-
-
-
-
-
-
-
-            ${
-                sameTable.length > 0
-
-                ?
-
-                `
-
-                <div class="party-title">
-
-                    SEATED WITH
-
-                </div>
-
-
-
-
-                <div class="party">
-
-                    ${sameTable
-
-                        .map(person =>
-                            person.name
-                        )
-
-                        .join("<br>")
-
-                    }
-
-                </div>
-
-                `
-
-                :
-
-                ""
-
-            }
-
-
-
-
-
-
-
-
-
-
-            ${
-                otherTables.length > 0
-
-                ?
-
-                `
-
-                <div class="party-title family-title">
-
-                    FAMILY & FRIENDS
-
-                </div>
-
-
-
-
-                <div class="family-subtitle">
-
-                    Other tables
-
-                </div>
-
-
-
-
-
-                <div class="party">
-
-                    ${otherTables
-
-                        .map(person =>
-
-                            `${person.name} — Table ${person.table}`
-
-                        )
-
-                        .join("<br>")
-
-                    }
-
-                </div>
-
-                `
-
-                :
-
-                ""
-
-            }
-
-
-
-
-
-
-
-            <p class="closing">
-
-                Enjoy the evening
-
-            </p>
-
-
-
-            `;
-
-
+            return;
 
         }
 
 
-    }
 
 
 
-    catch(error){
+
+        // =========================
+        // PAGE TRANSFORMATION
+        // =========================
+
+
+        form.classList.add(
+            "hide-search"
+        );
+
+
+
+        const title =
+            document.querySelector("h1");
+
+
+        if(title){
+
+            title.classList.add(
+                "hide-search"
+            );
+
+        }
+
+
+
+        const subtitle =
+            document.querySelector(".subtitle");
+
+
+        if(subtitle){
+
+            subtitle.classList.add(
+                "hide-search"
+            );
+
+        }
+
+
+
+
+        const topDivider =
+            document.querySelector(
+                ".divider"
+            );
+
+
+        if(topDivider){
+
+            topDivider.classList.add(
+                "hide-search"
+            );
+
+        }
+
+
+
+
+
+
+
+        const result =
+            document.querySelector(".result");
+
+
+
+        result.classList.remove(
+            "hidden"
+        );
+
+
+
+        result.style.animation =
+            "none";
+
+
+
+        setTimeout(() => {
+
+            result.style.animation =
+                "";
+
+        },10);
+
+
+
+
+
+
+
+
+
+        // Same table guests
+
+        const sameTable =
+            data.party.filter(person =>
+
+                person.name !== data.guest &&
+
+                String(person.table)
+                ===
+                String(data.table)
+
+            );
+
+
+
+
+
+
+        // Family/friends on other tables
+
+        const otherTables =
+            data.party.filter(person =>
+
+                person.name !== data.guest &&
+
+                String(person.table)
+                !==
+                String(data.table)
+
+            );
+
+
+
+
+
+
+
+
+        result.innerHTML = `
+
+
+        <div class="guest-name">
+
+            ${data.guest}
+
+        </div>
+
+
+
+
+        <div class="divider"></div>
+
+
+
+
+        <div class="label">
+
+            YOUR TABLE
+
+        </div>
+
+
+
+
+        <div class="number">
+
+            ${data.table}
+
+        </div>
+
+
+
+
+
+        ${
+            sameTable.length
+
+            ?
+
+            `
+
+            <div class="party-title">
+
+                SEATED WITH
+
+            </div>
+
+
+            <div class="party">
+
+                ${
+                    sameTable
+                    .map(person => person.name)
+                    .join("<br>")
+                }
+
+            </div>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
+
+
+
+
+        ${
+            otherTables.length
+
+            ?
+
+            `
+
+            <div class="party-title family-title">
+
+                FAMILY & FRIENDS
+
+            </div>
+
+
+
+            <div class="family-subtitle">
+
+                Other tables
+
+            </div>
+
+
+
+            <div class="party">
+
+                ${
+                    otherTables
+                    .map(person =>
+                        `${person.name} — Table ${person.table}`
+                    )
+                    .join("<br>")
+                }
+
+            </div>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
+
+
+
+        <p class="closing">
+
+            Enjoy the evening
+
+        </p>
+
+
+        `;
+
+
+
+
+    } catch(error){
 
 
         console.error(
@@ -641,13 +598,8 @@ async function findTable(){
         );
 
 
-    }
 
-
-
-
-    finally {
-
+    } finally {
 
 
         button.innerText =
