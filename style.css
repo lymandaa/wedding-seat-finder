@@ -463,3 +463,6 @@ footer {
 
 
 }
+.hidden {
+    display: none;
+}
