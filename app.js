@@ -7,18 +7,33 @@ const button = document.querySelector("button");
 let selectedGuest = "";
 
 
+
 // =============================
 // AUTOCOMPLETE SEARCH
 // =============================
 
 input.addEventListener("input", async () => {
 
-    const search = input.value.trim();
+
+    const search = input.value.trim().toLowerCase();
 
 
-    if (search.length < 2) {
+    selectedGuest = "";
+
+
+
+    if (search.length < 3) {
+
+        const oldList = document.querySelector(".suggestions");
+
+        if(oldList){
+            oldList.remove();
+        }
+
         return;
+
     }
+
 
 
     const response = await fetch(
@@ -26,10 +41,13 @@ input.addEventListener("input", async () => {
     );
 
 
+
     const results = await response.json();
 
 
+
     showSuggestions(results);
+
 
 });
 
@@ -46,14 +64,18 @@ function showSuggestions(results) {
     let oldList = document.querySelector(".suggestions");
 
 
-    if (oldList) {
+    if(oldList){
+
         oldList.remove();
+
     }
 
 
 
-    if (results.length === 0) {
+    if(results.length === 0){
+
         return;
+
     }
 
 
@@ -64,7 +86,8 @@ function showSuggestions(results) {
 
 
 
-    results.forEach(person => {
+    results.slice(0,5).forEach(person => {
+
 
 
         const item = document.createElement("div");
@@ -77,11 +100,15 @@ function showSuggestions(results) {
         item.addEventListener("click", () => {
 
 
+
             input.value = person.name;
+
 
             selectedGuest = person.name;
 
+
             list.remove();
+
 
 
         });
@@ -91,11 +118,13 @@ function showSuggestions(results) {
         list.appendChild(item);
 
 
+
     });
 
 
 
     input.parentElement.appendChild(list);
+
 
 
 }
@@ -111,15 +140,19 @@ function showSuggestions(results) {
 button.addEventListener("click", async () => {
 
 
-    if (!selectedGuest) {
+
+    if(!selectedGuest){
 
 
-        alert("Please select your name");
+        alert("Please select your name from the list");
 
 
         return;
 
+
     }
+
+
 
 
 
@@ -129,11 +162,11 @@ button.addEventListener("click", async () => {
 
         {
 
-            method: "POST",
+            method:"POST",
 
-            body: JSON.stringify({
+            body:JSON.stringify({
 
-                name: selectedGuest
+                name:selectedGuest
 
             })
 
@@ -143,12 +176,14 @@ button.addEventListener("click", async () => {
 
 
 
+
     const data = await response.json();
 
 
 
 
-    if (data.found) {
+
+    if(data.found){
 
 
 
@@ -156,13 +191,9 @@ button.addEventListener("click", async () => {
 
 
 
-        // Show hidden results section
-
         result.classList.remove("hidden");
 
 
-
-        // Reset animation
 
         result.style.animation = "none";
 
@@ -171,7 +202,36 @@ button.addEventListener("click", async () => {
 
             result.style.animation = "";
 
-        }, 10);
+        },10);
+
+
+
+
+
+        // People at the same table
+
+        const sameTable = data.party.filter(person =>
+
+            person.name !== data.guest &&
+
+            String(person.table) === String(data.table)
+
+        );
+
+
+
+
+
+        // Family/friends in same group but different tables
+
+        const otherTables = data.party.filter(person =>
+
+            person.name !== data.guest &&
+
+            String(person.table) !== String(data.table)
+
+        );
+
 
 
 
@@ -180,11 +240,14 @@ button.addEventListener("click", async () => {
         result.innerHTML = `
 
 
+
         <div class="guest-name">
 
-        ${data.guest}
+            ${data.guest}
 
         </div>
+
+
 
 
 
@@ -193,18 +256,20 @@ button.addEventListener("click", async () => {
 
 
 
+
         <div class="label">
 
-        YOUR TABLE
+            YOUR TABLE
 
         </div>
+
 
 
 
 
         <div class="number">
 
-        ${data.table}
+            ${data.table}
 
         </div>
 
@@ -212,27 +277,91 @@ button.addEventListener("click", async () => {
 
 
 
-        <div class="party-title">
 
-        SEATED WITH
+        ${
+            sameTable.length > 0
 
-        </div>
+            ?
+
+            `
+
+            <div class="party-title">
+
+                SEATED WITH
+
+            </div>
 
 
 
+            <div class="party">
 
+                ${sameTable
 
-        <div class="party">
+                    .map(person => person.name)
 
-        ${data.party
+                    .join("<br>")
 
-            .filter(name => name !== data.guest)
+                }
 
-            .join("<br>")
+            </div>
+
+            `
+
+            :
+
+            ""
 
         }
 
-        </div>
+
+
+
+
+
+
+
+        ${
+            otherTables.length > 0
+
+            ?
+
+            `
+
+            <div class="party-title family-title">
+
+                YOUR FAMILY & FRIENDS ARE SEATED AT
+
+            </div>
+
+
+
+
+            <div class="party">
+
+                ${otherTables
+
+                    .map(person =>
+
+                        `${person.name} — Table ${person.table}`
+
+                    )
+
+                    .join("<br>")
+
+                }
+
+            </div>
+
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
 
 
 
@@ -240,9 +369,10 @@ button.addEventListener("click", async () => {
 
         <p class="closing">
 
-        Enjoy the evening
+            Enjoy the evening
 
         </p>
+
 
 
 
@@ -251,6 +381,7 @@ button.addEventListener("click", async () => {
 
 
     }
+
 
 
 });
