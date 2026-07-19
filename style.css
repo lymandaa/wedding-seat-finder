@@ -1,18 +1,26 @@
-```css
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
-
 
 
 body {
 
     margin:0;
-
     min-height:100vh;
 
-    overflow:hidden;
+    background:
+    radial-gradient(circle at top, #18294d 0%, #081426 45%, #050b16 100%);
 
+    color:white;
+
+    font-family:'Montserrat', sans-serif;
+
+}
+
+
+.page {
+
+    min-height:100vh;
 
     display:flex;
 
@@ -20,24 +28,241 @@ body {
 
     align-items:center;
 
-
-    background:#162A3A;
-
-
-    color:#F8F2E8;
-
-    padding:25px;
-
-
-    font-family:
-    Montserrat,
-    sans-serif;
+    padding:30px;
 
 }
 
 
 
-/* Candlelight atmosphere */
+.content {
+
+    width:100%;
+    max-width:420px;
+
+    text-align:center;
+
+}
+
+
+
+.monogram {
+
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:48px;
+
+    letter-spacing:8px;
+
+    font-weight:300;
+
+}
+
+
+.monogram span {
+
+    color:#d8bd82;
+
+}
+
+
+
+.date {
+
+    margin-top:18px;
+
+    font-size:12px;
+
+    letter-spacing:5px;
+
+    color:#d8bd82;
+
+}
+
+
+
+.ornament {
+
+    margin:40px 0 25px;
+
+    color:#d8bd82;
+
+}
+
+
+
+h1 {
+
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:55px;
+
+    font-weight:300;
+
+    margin:0;
+
+}
+
+
+
+.subtitle {
+
+    font-size:14px;
+
+    letter-spacing:3px;
+
+    opacity:.8;
+
+    margin-bottom:45px;
+
+}
+
+
+
+.search-area label {
+
+    display:block;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+input {
+
+    width:100%;
+
+    padding:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(216,189,130,.5);
+
+    border-radius:2px;
+
+    color:white;
+
+    text-align:center;
+
+    font-size:16px;
+
+}
+
+
+
+input::placeholder {
+
+    color:#c8c8c8;
+
+}
+
+
+
+button {
+
+    margin-top:18px;
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    background:#d8bd82;
+
+    color:#081426;
+
+    letter-spacing:2px;
+
+    font-size:12px;
+
+    cursor:pointer;
+
+}
+
+
+
+.result {
+
+    margin-top:40px;
+
+}
+
+
+
+.guest-name {
+
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:34px;
+
+}
+
+
+
+.line {
+
+    height:1px;
+
+    background:#d8bd82;
+
+    width:80px;
+
+    margin:20px auto;
+
+}
+
+
+
+.label {
+
+    font-size:11px;
+
+    letter-spacing:4px;
+
+    color:#d8bd82;
+
+}
+
+
+
+.number {
+
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:70px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.closing {
+
+    font-family:'Cormorant Garamond', serif;
+
+    font-size:22px;
+
+}
+
+
+
+footer {
+
+    margin-top:50px;
+
+    font-family:'Cormorant Garamond', serif;
+
+    opacity:.8;
+
+}
+
+
 
 .night-glow {
 
@@ -47,433 +272,16 @@ body {
 
     height:500px;
 
+    background:#243b68;
 
-    background:
+    filter:blur(120px);
 
-    radial-gradient(
-        circle,
-        rgba(201,181,138,0.18),
-        transparent 65%
-    );
-
-
-    top:-150px;
+    top:-200px;
 
     left:50%;
 
     transform:translateX(-50%);
 
-
-    pointer-events:none;
-
-}
-
-
-
-
-
-.page {
-
-    width:100%;
-
-    max-width:420px;
-
-    text-align:center;
+    opacity:.35;
 
 }
-
-
-
-
-.content {
-
-    position:relative;
-
-    z-index:2;
-
-}
-
-
-
-
-/* Header */
-
-
-.monogram {
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:42px;
-
-
-    letter-spacing:5px;
-
-
-    color:#F8F2E8;
-
-
-}
-
-
-
-.monogram span {
-
-    color:#C9B58A;
-
-}
-
-
-
-.date {
-
-
-    margin-top:12px;
-
-
-    font-size:10px;
-
-
-    letter-spacing:4px;
-
-
-    color:#AAB9C4;
-
-}
-
-
-
-
-.ornament {
-
-
-    margin:45px 0 25px;
-
-
-    color:#C9B58A;
-
-
-    font-size:14px;
-
-}
-
-
-
-
-
-h1 {
-
-
-    margin:0;
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-weight:400;
-
-
-    font-size:62px;
-
-
-    line-height:1;
-
-
-}
-
-
-
-
-.subtitle {
-
-
-    margin-top:5px;
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:32px;
-
-
-    color:#F8F2E8;
-
-}
-
-
-
-
-
-/* Search */
-
-
-.search-area {
-
-
-    margin-top:55px;
-
-
-}
-
-
-
-label {
-
-
-    display:block;
-
-
-    margin-bottom:20px;
-
-
-    font-size:11px;
-
-
-    letter-spacing:3px;
-
-
-    text-transform:uppercase;
-
-
-    color:#AAB9C4;
-
-
-}
-
-
-
-
-input {
-
-
-    width:100%;
-
-
-    background:transparent;
-
-
-    border:none;
-
-
-    border-bottom:
-
-    1px solid rgba(201,181,138,0.7);
-
-
-    padding:14px 5px;
-
-
-    text-align:center;
-
-
-    color:#F8F2E8;
-
-
-    font-size:18px;
-
-
-    font-family:
-    Cormorant Garamond,
-    serif;
-
-
-}
-
-
-
-input::placeholder {
-
-    color:rgba(248,242,232,0.5);
-
-}
-
-
-
-input:focus {
-
-    outline:none;
-
-}
-
-
-
-
-button {
-
-
-    margin-top:35px;
-
-
-    background:none;
-
-
-    border:none;
-
-
-    color:#C9B58A;
-
-
-    font-size:11px;
-
-
-    letter-spacing:4px;
-
-
-    text-transform:uppercase;
-
-
-    padding-bottom:10px;
-
-
-    border-bottom:
-
-    1px solid #C9B58A;
-
-
-}
-
-
-
-
-
-/* Reveal */
-
-
-.result {
-
-
-    margin-top:50px;
-
-
-}
-
-
-
-.guest-name {
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:38px;
-
-}
-
-
-
-.gold-line {
-
-
-    width:80px;
-
-
-    height:1px;
-
-
-    background:#C9B58A;
-
-
-    margin:25px auto;
-
-}
-
-
-
-.label {
-
-
-    font-size:10px;
-
-
-    letter-spacing:4px;
-
-
-    color:#AAB9C4;
-
-
-}
-
-
-
-.number {
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:85px;
-
-
-    line-height:1;
-
-
-}
-
-
-
-.seat {
-
-
-    font-size:50px;
-
-}
-
-
-
-
-.closing {
-
-
-    margin-top:25px;
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:22px;
-
-}
-
-
-
-
-footer {
-
-
-    margin-top:55px;
-
-
-    font-family:
-    "Cormorant Garamond",
-    serif;
-
-
-    font-size:20px;
-
-
-    color:#F8F2E8;
-
-
-}
-
-
-
-.hidden {
-
-    display:none;
-
-}
-```
