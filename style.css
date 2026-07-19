@@ -540,3 +540,24 @@ footer {
     color: #6F7478;
 
 }
+
+.search-area,
+h1,
+.subtitle {
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+
+}
+
+
+.hide-search {
+
+    opacity: 0;
+
+    transform: translateY(-15px);
+
+    pointer-events: none;
+
+}
