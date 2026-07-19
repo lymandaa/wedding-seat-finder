@@ -317,6 +317,7 @@ button:hover {
 
 }
 
+
 .result {
 
     margin-top: 50px;
@@ -349,6 +350,8 @@ button:hover {
 }
 
 
+
+/* Guest Name */
 
 .guest-name {
 
@@ -390,16 +393,33 @@ button:hover {
 
     margin-top: 18px;
 
-    margin-bottom: 55px;
+    margin-bottom: 35px;
 
 }
 
 
-/* Party / Family */
+
+/* Seating Section Titles */
+
+.party-title {
+
+    margin-top: 45px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #6F7478;
+
+}
+
+
+
+/* Party / Family Names */
 
 .party {
 
-    margin-top: 35px;
+    margin-top: 25px;
 
     padding-top: 25px;
 
@@ -414,6 +434,36 @@ button:hover {
     letter-spacing: 1.5px;
 
     color: #6F7478;
+
+}
+
+
+
+/* Family Section */
+
+.family-title {
+
+    margin-top: 55px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #D8D0C5;
+
+}
+
+
+
+.family-subtitle {
+
+    margin-top: 8px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    color: #9A9A9A;
 
 }
 
