@@ -295,3 +295,65 @@ footer {
     color: #6F7478;
 
 }
+
+
+/* ========================= */
+/* Autocomplete Suggestions */
+/* ========================= */
+
+.suggestions {
+
+    margin-top: 10px;
+
+    background: #F7F4EF;
+
+    border: 1px solid #D8D0C5;
+
+    border-radius: 3px;
+
+    overflow: hidden;
+
+}
+
+
+.suggestions div {
+
+    padding: 14px;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+
+    color: #33363A;
+
+    cursor: pointer;
+
+}
+
+
+.suggestions div:hover {
+
+    background: #E8EEF2;
+
+}
+
+
+/* ========================= */
+/* Party List */
+/* ========================= */
+
+.party {
+
+    margin-top: 20px;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 13px;
+
+    line-height: 2;
+
+    letter-spacing: 1px;
+
+    color: #6F7478;
+
+}
