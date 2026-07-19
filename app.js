@@ -2,7 +2,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwHNdTlDchoC6JMk-_-4kFQ
 
 
 const input = document.getElementById("guestName");
-const form = document.getElementById("searchArea");
+const form = document.getElementById("guestSearch");
 
 let selectedGuest = "";
 let searchTimer;
@@ -20,8 +20,6 @@ form.addEventListener("submit", async (event) => {
 
 
 
-    // If dropdown exists, choose first result
-
     const firstSuggestion = document.querySelector(
         ".suggestions div"
     );
@@ -32,7 +30,6 @@ form.addEventListener("submit", async (event) => {
 
 
         selectedGuest = firstSuggestion.innerText;
-
 
         input.value = selectedGuest;
 
@@ -68,7 +65,6 @@ form.addEventListener("submit", async (event) => {
 
 
 
-    // Remove dropdown
 
     const suggestionBox =
         document.querySelector(".suggestions");
@@ -359,21 +355,32 @@ async function findTable(){
 
 
 
-            // Hide search area
+            // =========================
+            // TRANSFORM PAGE
+            // =========================
+
 
             form.classList.add(
                 "hide-search"
             );
 
 
-
             document.querySelector("h1")
-                .classList.add("hide-search");
-
+                .classList.add(
+                    "hide-search"
+                );
 
 
             document.querySelector(".subtitle")
-                .classList.add("hide-search");
+                .classList.add(
+                    "hide-search"
+                );
+
+
+            document.querySelector(".divider")
+                .classList.add(
+                    "hide-search"
+                );
 
 
 
